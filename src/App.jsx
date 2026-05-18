@@ -2,7 +2,7 @@
    IMPORT SECTION
 ========================================= */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { questions } from "./data/questions";
 import { supabase } from "./supabaseClient";
 import "./App.css";
@@ -24,6 +24,7 @@ function App() {
   const [message, setMessage] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [profile, setProfile] = useState("");
+  const [leaderboard, setLeaderboard] = useState([]);
 
   /* =========================================
      PROFILE DATA
@@ -124,6 +125,7 @@ function App() {
       console.log(error);
     } else {
       console.log("Score saved successfully!");
+      fetchLeaderboard();
     }
   };
 
@@ -139,6 +141,31 @@ function App() {
     setMessage("");
     setShowPopup(false);
   };
+  /* =========================================
+     Leaderboard function
+  ========================================= */
+  const fetchLeaderboard = async () => {
+    const { data, error } = await supabase
+      .from("worksheet_results")
+      .select("*")
+      .order("score", { ascending: false })
+      .limit(10);
+
+    if (data) {
+      setLeaderboard(data);
+    }
+
+    if (error) {
+      console.log(error);
+    }
+  };
+
+  /* =========================================
+     Load leaderboard automatically
+  ========================================= */
+  useEffect(() => {
+    fetchLeaderboard();
+  }, []);
 
   /* =========================================
      GET SELECTED PROFILE OBJECT
@@ -353,7 +380,53 @@ function App() {
 
       </main>
 
-      {/* =========================================
+      {
+
+      /* =========================================
+         Add leaderboard UI
+      ========================================= */
+      <div className="leaderboard-section">
+
+        <h2 className="leaderboard-title">
+          Leaderboard
+        </h2>
+
+        <div className="leaderboard-list">
+
+          {leaderboard.map((player, index) => (
+
+            <div
+              key={player.id}
+              className="leaderboard-card"
+            >
+
+              <div>
+                <strong>
+                  #{index + 1}
+                </strong>
+
+                {" "}
+                {player.profile === "Cat Learner" && "🐱"}
+                {player.profile === "Rocket Student" && "🚀"}
+                {player.profile === "Math Hero" && "🦸"}
+
+                {" "}
+                {player.name}
+              </div>
+
+              <div>
+                {player.score}/{player.total}
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </div>
+
+      /* =========================================
          FOOTER SECTION
       ========================================= */}
 

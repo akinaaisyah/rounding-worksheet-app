@@ -359,3 +359,44 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* =========================================
+   LEADERBOARD SECTION
+========================================= */
+
+.leaderboard-section {
+  margin-top: 40px;
+}
+
+/* =========================================
+   LEADERBOARD TITLE
+========================================= */
+
+.leaderboard-title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+
+/* =========================================
+   LEADERBOARD LIST
+========================================= */
+
+.leaderboard-list {
+  display: grid;
+  gap: 14px;
+}
+
+/* =========================================
+   LEADERBOARD CARD
+========================================= */
+
+.leaderboard-card {
+  background: #f8fafc;
+  padding: 18px 22px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+}
