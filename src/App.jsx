@@ -4,7 +4,9 @@
 
 import { useState } from "react";
 import { questions } from "./data/questions";
+import { supabase } from "./supabaseClient";
 import "./App.css";
+
 
 /* =========================================
    MAIN APP COMPONENT
@@ -57,8 +59,7 @@ function App() {
      HANDLE FORM SUBMISSION
   ========================================= */
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async () => {
     /* ---------- NAME VALIDATION ---------- */
 
     if (!name.trim()) {
@@ -104,6 +105,26 @@ function App() {
     /* ---------- SHOW POPUP ---------- */
 
     setShowPopup(true);
+    /* ---------- Save Data into database ---------- */
+    const percentageRounded = Math.round(percentage);
+
+    const { error } = await supabase
+      .from("worksheet_results")
+      .insert([
+        {
+          name: name,
+          profile: profile,
+          score: total,
+          total: questions.length,
+          percentage: percentageRounded,
+        },
+      ]);
+
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Score saved successfully!");
+    }
   };
 
   /* =========================================
