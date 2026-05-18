@@ -400,3 +400,31 @@ body {
   align-items: center;
   border: 1px solid #e2e8f0;
 }
+
+/* =========================================
+   RANK BADGES
+========================================= */
+
+.rank-badge {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+/* =========================================
+   TOP 3 LEADERBOARD COLORS
+========================================= */
+
+.gold {
+  background: #fef3c7;
+  border: 2px solid #facc15;
+}
+
+.silver {
+  background: #e5e7eb;
+  border: 2px solid #9ca3af;
+}
+
+.bronze {
+  background: #fed7aa;
+  border: 2px solid #fb923c;
+}
