@@ -1,0 +1,361 @@
+/* =========================================
+   MAIN WEBSITE LAYOUT
+========================================= */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================
+   MAIN WORKSHEET CONTAINER
+========================================= */
+
+.worksheet-container {
+  max-width: 1000px;
+  width: 100%;
+  margin: auto;
+  background: white;
+  padding: 32px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   TITLE & SUBTITLE SECTION
+========================================= */
+
+.title {
+  font-size: 42px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #0f172a;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+/* =========================================
+   NAME INPUT SECTION
+========================================= */
+
+.name-input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 30px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: #0f172a;
+}
+
+/* =========================================
+   QUESTIONS GRID LAYOUT
+========================================= */
+
+.questions-grid {
+  display: grid;
+  gap: 20px;
+}
+
+/* =========================================
+   INDIVIDUAL QUESTION CARD
+========================================= */
+
+.question-card {
+  background: #f8fafc;
+  padding: 24px;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+/* =========================================
+   QUESTION TITLE
+========================================= */
+
+.question-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 18px;
+  color: #0f172a;
+}
+
+/* =========================================
+   OPTIONS BUTTON LAYOUT
+========================================= */
+
+.options-grid {
+  display: grid;
+  gap: 12px;
+}
+
+/* =========================================
+   OPTION BUTTON STYLING
+========================================= */
+
+.option-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.option-btn:hover {
+  background: #e2e8f0;
+}
+
+/* =========================================
+   SELECTED OPTION BUTTON
+========================================= */
+
+.selected {
+  background: #0f172a;
+  color: white;
+  border-color: #0f172a;
+}
+
+/* =========================================
+   BUTTON ROW SECTION
+========================================= */
+
+.button-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+/* =========================================
+   SUBMIT BUTTON
+========================================= */
+
+.submit-btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 16px;
+  background: #0f172a;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: #1e293b;
+}
+
+/* =========================================
+   RESET BUTTON
+========================================= */
+
+.reset-btn {
+  padding: 14px 28px;
+  border-radius: 16px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.reset-btn:hover {
+  background: #f1f5f9;
+}
+
+/* =========================================
+   SCORE DISPLAY BOX
+========================================= */
+
+.score-box {
+  margin-top: 30px;
+  background: #dcfce7;
+  padding: 24px;
+  border-radius: 24px;
+  text-align: center;
+}
+
+.score-box h2 {
+  margin: 0;
+  font-size: 36px;
+  color: #166534;
+}
+
+/* =========================================
+   FOOTER COPYRIGHT SECTION
+========================================= */
+
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN FOR MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+  .worksheet-container {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .question-title {
+    font-size: 18px;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+
+  .submit-btn,
+  .reset-btn {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   POPUP OVERLAY
+========================================= */
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+/* =========================================
+   POPUP BOX
+========================================= */
+
+.popup-box {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+/* =========================================
+   POPUP SCORE
+========================================= */
+
+.popup-score {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 20px 0;
+  color: #0f172a;
+}
+
+/* =========================================
+   POPUP MESSAGE
+========================================= */
+
+.popup-message {
+  font-size: 18px;
+  color: #475569;
+  margin-bottom: 24px;
+}
+
+/* =========================================
+   CLOSE BUTTON
+========================================= */
+
+.close-popup-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 14px;
+  background: #0f172a;
+  color: white;
+  cursor: pointer;
+}
+
+/* =========================================
+   PROFILE SELECTION SECTION
+========================================= */
+
+.profile-section {
+  margin-bottom: 30px;
+}
+
+.profile-section h3 {
+  margin-bottom: 14px;
+  color: #0f172a;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.profile-card {
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  cursor: pointer;
+  font-size: 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  transition: 0.3s;
+}
+
+.profile-card span {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.profile-card:hover {
+  background: #f1f5f9;
+}
+
+.selected-profile {
+  background: #0f172a;
+  color: white;
+  border-color: #0f172a;
+}
+
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
