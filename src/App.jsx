@@ -17,6 +17,8 @@ import backgroundImage from "./assets/Background image.png";
 import mathieImage from "./assets/Mathie.png";
 import mingoImage from "./assets/Mingo.png";
 import puffinImage from "./assets/Puffin Profile.png";
+import mathieWaving from "./assets/Mathie waving.png";
+import mingoWaving from "./assets/Mingo waving.png";
 
 /* =========================================
    MAIN APP COMPONENT
@@ -256,13 +258,13 @@ function App() {
         </div>
 
         <img
-          src={mathieImage}
+          src={mathieWaving}
           alt="Mathie mascot"
           className="hero-mascot hero-mascot-left"
         />
 
         <img
-          src={mingoImage}
+          src={mingoWaving}
           alt="Mingo mascot"
           className="hero-mascot hero-mascot-right"
         />
@@ -439,7 +441,7 @@ function App() {
               onClick={handleReset}
               className="reset-btn"
             >
-              ↻ Play Again
+              ↻ Clear Answers
             </button>
 
             <button
@@ -595,6 +597,10 @@ function App() {
                         <strong>
                           {player.score}/{player.total}
                         </strong>
+
+                        <small className="leaderboard-time">
+                          ⏱ {player.time_seconds || 0}s
+                        </small>
 
                         {index === 0 && <span>👑</span>}
                       </div>
