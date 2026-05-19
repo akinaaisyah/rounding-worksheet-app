@@ -1,72 +1,360 @@
-/* =========================================
-   MAIN WEBSITE LAYOUT
-========================================= */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka:wght@600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f1f5f9;
+  font-family: "Nunito", Arial, sans-serif;
+  background: #eff6ff;
+  color: #1e3a8a;
 }
 
 .app {
   min-height: 100vh;
-  padding: 24px;
+  padding-bottom: 24px;
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+.hero-section {
+  position: relative;
+  min-height: 420px;
+  padding-bottom: 60px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* =========================================
-   MAIN WORKSHEET CONTAINER
-========================================= */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(219, 234, 254, 0.25);
+}
 
-.worksheet-container {
-  max-width: 1000px;
-  width: 100%;
-  margin: auto;
+.hero-top-bar {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 3;
+}
+
+.top-pill,
+.coin-box {
   background: white;
-  padding: 32px;
-  border-radius: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
 }
 
-/* =========================================
-   TITLE & SUBTITLE SECTION
-========================================= */
-
-.title {
-  font-size: 42px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #0f172a;
+.coin-box {
+  color: #f59e0b;
 }
 
-.subtitle {
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.hero-title {
+  font-family: "Fredoka", sans-serif;
+  font-size: clamp(52px, 9vw, 110px);
+  color: white;
+  text-shadow: 5px 5px 0 #1e3a8a;
+  margin: 0;
+}
+
+.hero-ribbon {
+  background: #1e40af;
+  color: white;
+  padding: 12px 36px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: clamp(18px, 3vw, 30px);
+  display: inline-block;
+  margin: 10px 0;
+}
+
+.hero-desc {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1e3a8a;
+}
+
+.hero-cta-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 14px 34px;
+  border-radius: 18px;
   font-size: 18px;
-  color: #64748b;
-  margin-bottom: 30px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #1e3a8a;
+  margin-top: 20px;
+}
+
+.hero-mascot {
+  position: absolute;
+  bottom: 0;
+  width: 210px;
+  z-index: 2;
+  animation: floatMascot 3s ease-in-out infinite;
+}
+
+.hero-mascot-left {
+  left: 60px;
+}
+
+.hero-mascot-right {
+  right: 60px;
 }
 
 /* =========================================
-   NAME INPUT SECTION
+   MAIN GRID
 ========================================= */
+
+.main-grid {
+  max-width: 1250px;
+  margin: 24px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+}
+
+/* =========================================
+   WORKSHEET CARD
+========================================= */
+
+.worksheet-container,
+.profile-preview,
+.leaderboard-section {
+  background: white;
+  border-radius: 28px;
+  padding: 28px;
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.15);
+  border: 3px solid #dbeafe;
+}
+
+.start-banner {
+  background: #2563eb;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  border-radius: 18px;
+  font-weight: 900;
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+/* =========================================
+   NAME INPUT
+========================================= */
+
+.input-label {
+  display: block;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: 24px;
+}
 
 .name-input {
   width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid #cbd5e1;
-  margin-bottom: 30px;
+  padding: 15px 48px 15px 18px;
+  border-radius: 18px;
+  border: 3px solid #bfdbfe;
   font-size: 16px;
-  box-sizing: border-box;
+  outline: none;
 }
 
 .name-input:focus {
-  outline: none;
-  border-color: #0f172a;
+  border-color: #2563eb;
+}
+
+.input-paw {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 /* =========================================
-   QUESTIONS GRID LAYOUT
+   PROFILE SELECTION
+========================================= */
+
+.profile-section {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.profile-card {
+  background: #eaf3ff;
+  border: 4px solid #bfdbfe;
+  border-radius: 28px;
+  padding: 14px 14px 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  min-height: 290px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+}
+
+.selected-profile {
+  background: linear-gradient(
+    180deg,
+    #dbeafe 0%,
+    #ffffff 100%
+  );
+
+  border-color: #2563eb;
+
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 12px 30px rgba(37, 99, 235, 0.22),
+    0 0 0 5px rgba(37, 99, 235, 0.12);
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 210px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 8px;
+
+  position: relative;
+}
+
+.profile-avatar-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  transition: transform 0.25s ease;
+}
+
+/* PROFILE IMAGE HOVER ANIMATION*/
+
+.profile-card:hover .profile-avatar-img img {
+  transform: scale(1.06);
+}
+
+.profile-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  background: #2563eb;
+  color: white;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+}
+
+.profile-card strong {
+  font-size: 34px;
+  font-weight: 900;
+  color: #1e3a8a;
+  margin-top: -6px;
+}
+
+.profile-card span {
+  font-size: 15px;
+  font-weight: 800;
+  color: #4b5563;
+
+  margin-top: 4px;
+}
+
+/* =========================================
+   PROGRESS BAR
+========================================= */
+
+.progress-bar-section {
+  background: #eff6ff;
+  padding: 16px;
+  border-radius: 18px;
+  margin-bottom: 24px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.timer-badge {
+  background: #2563eb;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.progress-track {
+  height: 12px;
+  background: #bfdbfe;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4c9aff, #2563eb);
+}
+
+/* =========================================
+   QUESTION CARDS
 ========================================= */
 
 .questions-grid {
@@ -74,357 +362,378 @@ body {
   gap: 20px;
 }
 
-/* =========================================
-   INDIVIDUAL QUESTION CARD
-========================================= */
-
 .question-card {
-  background: #f8fafc;
+  background: #f8fbff;
+  border: 3px solid #dbeafe;
+  border-radius: 26px;
   padding: 24px;
-  border-radius: 24px;
-  border: 1px solid #e2e8f0;
 }
 
-/* =========================================
-   QUESTION TITLE
-========================================= */
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.question-number {
+  background: #2563eb;
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+
+.question-count {
+  background: #e0f2fe;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 800;
+}
 
 .question-title {
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 24px;
   margin-bottom: 18px;
-  color: #0f172a;
 }
 
+
 /* =========================================
-   OPTIONS BUTTON LAYOUT
+   OPTIONS
 ========================================= */
 
 .options-grid {
   display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
 }
 
-/* =========================================
-   OPTION BUTTON STYLING
-========================================= */
-
 .option-btn {
-  width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 3px solid #dbeafe;
   background: white;
+  font-size: 18px;
+  font-weight: 900;
   cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
 }
 
 .option-btn:hover {
-  background: #e2e8f0;
+  background: #eff6ff;
 }
 
-/* =========================================
-   SELECTED OPTION BUTTON
-========================================= */
+.option-letter {
+  background: #93c5fd;
+  color: #1e3a8a;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
 
 .selected {
-  background: #0f172a;
+  background: #dcfce7;
+  border-color: #22c55e;
+}
+
+.selected .option-letter {
+  background: #22c55e;
   color: white;
-  border-color: #0f172a;
 }
 
 /* =========================================
-   BUTTON ROW SECTION
+   BUTTONS
 ========================================= */
 
 .button-row {
   display: flex;
-  gap: 16px;
-  margin-top: 30px;
-  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 26px;
 }
 
-/* =========================================
-   SUBMIT BUTTON
-========================================= */
+.submit-btn,
+.reset-btn,
+.close-popup-btn,
+.popup-reset-btn {
+  border: none;
+  border-radius: 18px;
+  padding: 14px 26px;
+  font-weight: 900;
+  font-size: 16px;
+  cursor: pointer;
+}
 
 .submit-btn {
-  padding: 14px 28px;
-  border: none;
-  border-radius: 16px;
-  background: #0f172a;
+  flex: 1;
+  background: #2563eb;
   color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
 }
-
-.submit-btn:hover {
-  background: #1e293b;
-}
-
-/* =========================================
-   RESET BUTTON
-========================================= */
 
 .reset-btn {
-  padding: 14px 28px;
-  border-radius: 16px;
-  border: 1px solid #cbd5e1;
-  background: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.reset-btn:hover {
-  background: #f1f5f9;
+  background: #e0f2fe;
+  color: #1e3a8a;
 }
 
 /* =========================================
-   SCORE DISPLAY BOX
+   SCORE BOX
 ========================================= */
 
 .score-box {
-  margin-top: 30px;
-  background: #dcfce7;
+  margin-top: 26px;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: white;
+  border-radius: 28px;
   padding: 24px;
-  border-radius: 24px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.score-box h2 {
-  margin: 0;
-  font-size: 36px;
-  color: #166534;
+.score-mascot img {
+  width: 90px;
+}
+
+.big-score {
+  font-size: 48px;
+  font-weight: 900;
+  color: #fff3a6;
+}
+
+.big-score span {
+  font-size: 28px;
+  color: white;
+}
+
+.score-tagline {
+  color: #fff3a6;
+  font-weight: 900;
+}
+
+.score-trophy {
+  font-size: 48px;
 }
 
 /* =========================================
-   FOOTER COPYRIGHT SECTION
+   SIDE PANEL
 ========================================= */
 
-.footer {
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  position: sticky;
+  top: 20px;
+}
+
+.profile-preview {
   text-align: center;
-  margin-top: 40px;
-  color: #64748b;
-  font-size: 14px;
+  background: linear-gradient(180deg, #4c9aff, white 45%);
+}
+
+.profile-preview h2 {
+  color: white;
+}
+
+.profile-preview-avatar {
+  width: 110px;
+  height: 110px;
+  margin: auto;
+  background: #eff6ff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.profile-preview-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.profile-placeholder {
+  font-size: 46px;
 }
 
 /* =========================================
-   RESPONSIVE DESIGN FOR MOBILE
+   LEADERBOARD
 ========================================= */
 
-@media (max-width: 768px) {
-  .worksheet-container {
-    padding: 20px;
-  }
+.leaderboard-section {
+  background: linear-gradient(180deg, #2563eb, #eff6ff);
+}
 
-  .title {
-    font-size: 30px;
-  }
+.leaderboard-title {
+  text-align: center;
+  color: white;
+}
 
-  .question-title {
-    font-size: 18px;
-  }
+.leaderboard-list {
+  display: grid;
+  gap: 12px;
+}
 
-  .button-row {
-    flex-direction: column;
-  }
+.leaderboard-card {
+  background: white;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .submit-btn,
-  .reset-btn {
-    width: 100%;
-  }
+.leaderboard-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.leaderboard-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #dbeafe;
+}
+
+.leaderboard-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.leaderboard-info strong,
+.leaderboard-info small {
+  display: block;
+}
+
+.rank-badge {
+  font-size: 20px;
+}
+
+.gold {
+  border: 3px solid #facc15;
+}
+
+.silver {
+  border: 3px solid #94a3b8;
+}
+
+.bronze {
+  border: 3px solid #fb923c;
 }
 
 /* =========================================
-   POPUP OVERLAY
+   POPUP
 ========================================= */
 
 .popup-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  inset: 0;
+  background: rgba(30, 58, 138, 0.65);
+  display: grid;
+  place-items: center;
   z-index: 999;
 }
 
-/* =========================================
-   POPUP BOX
-========================================= */
-
 .popup-box {
   background: white;
-  padding: 40px;
-  border-radius: 24px;
+  padding: 36px;
+  border-radius: 30px;
+  width: min(420px, 90%);
   text-align: center;
-  width: 90%;
-  max-width: 400px;
 }
 
-/* =========================================
-   POPUP SCORE
-========================================= */
+.popup-mascot img {
+  width: 110px;
+}
 
 .popup-score {
-  font-size: 48px;
-  font-weight: bold;
-  margin: 20px 0;
-  color: #0f172a;
+  font-size: 56px;
+  font-weight: 900;
+  color: #2563eb;
 }
-
-/* =========================================
-   POPUP MESSAGE
-========================================= */
 
 .popup-message {
-  font-size: 18px;
-  color: #475569;
-  margin-bottom: 24px;
+  font-weight: 800;
 }
 
-/* =========================================
-   CLOSE BUTTON
-========================================= */
+.popup-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
 
 .close-popup-btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 14px;
-  background: #0f172a;
+  background: #2563eb;
   color: white;
-  cursor: pointer;
+}
+
+.popup-reset-btn {
+  background: #e0f2fe;
+  color: #1e3a8a;
 }
 
 /* =========================================
-   PROFILE SELECTION SECTION
+   FOOTER
 ========================================= */
 
-.profile-section {
-  margin-bottom: 30px;
+.footer {
+  text-align: center;
+  color: #64748b;
+  font-weight: 700;
+  margin-top: 20px;
 }
 
-.profile-section h3 {
-  margin-bottom: 14px;
-  color: #0f172a;
-}
+/* =========================================
+   RESPONSIVE
+========================================= */
 
-.profile-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
-.profile-card {
-  padding: 18px;
-  border-radius: 18px;
-  border: 1px solid #cbd5e1;
-  background: white;
-  cursor: pointer;
-  font-size: 24px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-
-  transition: 0.3s;
-}
-
-.profile-card span {
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.profile-card:hover {
-  background: #f1f5f9;
-}
-
-.selected-profile {
-  background: #0f172a;
-  color: white;
-  border-color: #0f172a;
-}
-
-@media (max-width: 768px) {
-  .profile-grid {
+@media (max-width: 950px) {
+  .main-grid {
     grid-template-columns: 1fr;
+  }
+
+  .side-panel {
+    position: static;
+  }
+
+  .hero-mascot {
+    display: none;
   }
 }
 
-/* =========================================
-   LEADERBOARD SECTION
-========================================= */
+@media (max-width: 650px) {
+  .app {
+    padding: 0;
+  }
 
-.leaderboard-section {
-  margin-top: 40px;
-}
+  .main-grid {
+    padding: 0 12px;
+  }
 
-/* =========================================
-   LEADERBOARD TITLE
-========================================= */
+  .profile-grid,
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
 
-.leaderboard-title {
-  font-size: 32px;
-  margin-bottom: 20px;
-  color: #0f172a;
-}
+  .button-row,
+  .score-box,
+  .popup-buttons {
+    flex-direction: column;
+  }
 
-/* =========================================
-   LEADERBOARD LIST
-========================================= */
+  .hero-title {
+    font-size: 44px;
+  }
 
-.leaderboard-list {
-  display: grid;
-  gap: 14px;
-}
-
-/* =========================================
-   LEADERBOARD CARD
-========================================= */
-
-.leaderboard-card {
-  background: #f8fafc;
-  padding: 18px 22px;
-  border-radius: 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #e2e8f0;
-}
-
-/* =========================================
-   RANK BADGES
-========================================= */
-
-.rank-badge {
-  font-size: 24px;
-  margin-bottom: 5px;
-}
-
-/* =========================================
-   TOP 3 LEADERBOARD COLORS
-========================================= */
-
-.gold {
-  background: #fef3c7;
-  border: 2px solid #facc15;
-}
-
-.silver {
-  background: #e5e7eb;
-  border: 2px solid #9ca3af;
-}
-
-.bronze {
-  background: #fed7aa;
-  border: 2px solid #fb923c;
+  .hero-section {
+    min-height: 300px;
+  }
 }

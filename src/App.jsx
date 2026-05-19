@@ -5,7 +5,18 @@
 import { useState, useEffect } from "react";
 import { questions } from "./data/questions";
 import { supabase } from "./supabaseClient";
+import confetti from "canvas-confetti";
 import "./App.css";
+
+/* =========================================
+   IMAGE IMPORT SECTION
+   Make sure these files exist in: src/assets/
+========================================= */
+
+import backgroundImage from "./assets/Background image.png";
+import mathieImage from "./assets/Mathie.png";
+import mingoImage from "./assets/Mingo.png";
+import puffinImage from "./assets/Puffin Profile.png";
 
 /* =========================================
    MAIN APP COMPONENT
@@ -29,9 +40,18 @@ function App() {
   ========================================= */
 
   const profiles = [
-    { name: "Cat Learner", emoji: "🐱" },
-    { name: "Rocket Student", emoji: "🚀" },
-    { name: "Math Hero", emoji: "🦸" },
+    {
+      role: "Cat Learner",
+      image: mathieImage,
+    },
+    {
+      role: "Rocket Student",
+      image: mingoImage,
+    },
+    {
+      role: "Math Hero",
+      image: puffinImage,
+    },
   ];
 
   /* =========================================
@@ -78,21 +98,15 @@ function App() {
   ========================================= */
 
   const handleSubmit = async () => {
-    /* ---------- NAME VALIDATION ---------- */
-
     if (!name.trim()) {
       alert("Please enter your name first!");
       return;
     }
 
-    /* ---------- PROFILE VALIDATION ---------- */
-
     if (!profile) {
-      alert("Please choose your profile first!");
+      alert("Please choose your avatar first!");
       return;
     }
-
-    /* ---------- SCORE CALCULATION ---------- */
 
     let total = 0;
 
@@ -104,33 +118,35 @@ function App() {
 
     setScore(total);
 
-    /* ---------- PERCENTAGE CALCULATION ---------- */
-
     const percentage = (total / questions.length) * 100;
     const percentageRounded = Math.round(percentage);
 
-    /* ---------- MOTIVATIONAL MESSAGE ---------- */
-
     if (percentage === 100) {
-      setMessage("Perfect score! You're a rounding master!");
+      setMessage("Perfect score! You are a rounding superstar! 🌟");
     } else if (percentage >= 80) {
-      setMessage("Amazing work! You're doing really well!");
+      setMessage("Amazing work! You are climbing the leaderboard! 🏆");
     } else if (percentage >= 50) {
-      setMessage("Good try! Keep practicing and you'll improve!");
+      setMessage("Good try! Practice makes progress! 💪");
     } else {
-      setMessage("Don't give up! Every mistake helps you learn!");
+      setMessage("Do not give up! Every mistake helps you learn! 💙");
     }
-
-    /* ---------- SHOW POPUP ---------- */
 
     setShowPopup(true);
 
-    /* ---------- SAVE DATA INTO DATABASE ---------- */
+    if (percentage >= 80) {
+    confetti({
+      particleCount: 120,
+      spread: 80,
+      origin: { y: 0.6 },
+    });
+  }
+
+    const selectedProfile = profiles.find((p) => p.name === profile);
 
     const { error } = await supabase.from("worksheet_results").insert([
       {
         name: name.trim(),
-        profile: profile,
+        profile: selectedProfile.role,
         score: total,
         total: questions.length,
         percentage: percentageRounded,
@@ -140,7 +156,6 @@ function App() {
     if (error) {
       console.log(error);
     } else {
-      console.log("Score saved successfully!");
       fetchLeaderboard();
     }
   };
@@ -171,208 +186,414 @@ function App() {
   return (
     <div className="app">
       {/* =========================================
-         MAIN WORKSHEET CONTAINER
+          HERO SECTION
       ========================================= */}
 
-      <main className="worksheet-container">
-        {/* =========================================
-           TITLE SECTION
-        ========================================= */}
+      <section
+        className="hero-section"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+        }}
+      >
+        <div className="hero-top-bar">
+          <div className="top-pill">🐾 Round Up!</div>
+          <div className="coin-box">👑 1250</div>
+        </div>
 
-        <h1 className="title">Rounding Off Worksheet</h1>
-
-        <p className="subtitle">Round the numbers to the nearest 10.</p>
-
-        {/* =========================================
-           NAME INPUT
-        ========================================= */}
-
-        <input
-          type="text"
-          placeholder="Enter your name"
-          className="name-input"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+        <img
+          src={mathieImage}
+          alt="Mathie mascot"
+          className="hero-mascot hero-mascot-left"
         />
 
+        <img
+          src={mingoImage}
+          alt="Mingo mascot"
+          className="hero-mascot hero-mascot-right"
+        />
+
+        <div className="hero-content">
+          <h1 className="hero-title">ROUND UP!</h1>
+
+          <div className="hero-ribbon">
+            Rounding Off Challenge
+          </div>
+
+          <p className="hero-desc">
+            Round the numbers to the nearest 10 <br />
+            and become a <b>math star!</b> ⭐
+          </p>
+
+          <button className="hero-cta-btn">
+            Let's Start! →
+          </button>
+        </div>
+      </section>
+
+      {/* =========================================
+          MAIN GRID
+      ========================================= */}
+
+      <main className="main-grid">
         {/* =========================================
-           PROFILE SELECTION
+            WORKSHEET SECTION
         ========================================= */}
 
-        <div className="profile-section">
-          <h3>Choose your profile</h3>
+        <section className="worksheet-container">
+          <div className="start-banner">
+            🐾 Let's get started!
+          </div>
 
-          <div className="profile-grid">
-            {profiles.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => setProfile(item.name)}
-                className={
-                  profile === item.name
-                    ? "profile-card selected-profile"
-                    : "profile-card"
-                }
-              >
-                <div className="profile-emoji">{item.emoji}</div>
+          {/* =========================================
+              NAME INPUT SECTION
+          ========================================= */}
 
-                <span>{item.name}</span>
-              </button>
+          <label className="input-label">
+            Enter your name
+          </label>
+
+          <div className="input-wrapper">
+            <input
+              type="text"
+              placeholder="Type your name here..."
+              className="name-input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+
+            <span className="input-paw">🐾</span>
+          </div>
+
+          {/* =========================================
+              PROFILE SELECTION SECTION
+          ========================================= */}
+
+          <div className="profile-section">
+            <h3>Choose your avatar</h3>
+
+            <div className="profile-grid">
+              {profiles.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => setProfile(item.name)}
+                  className={
+                    profile === item.name
+                      ? "profile-card selected-profile"
+                      : "profile-card"
+                  }
+                >
+                  <div className="profile-avatar-img">
+                    <img src={item.image} alt={item.name} />
+
+                    {profile === item.name && (
+                      <span className="profile-check">
+                        ✓
+                      </span>
+                    )}
+                  </div>
+
+                  <strong>{item.name}</strong>
+                  <span>{item.role}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* =========================================
+              PROGRESS BAR SECTION
+          ========================================= */}
+
+          <div className="progress-bar-section">
+            <div className="progress-header">
+              <span>
+                Answered {Object.keys(answers).length} of{" "}
+                {questions.length}
+              </span>
+
+              <span className="timer-badge">⏱ Practice Mode</span>
+            </div>
+
+            <div className="progress-track">
+              <div
+                className="progress-fill"
+                style={{
+                  width: `${
+                    (Object.keys(answers).length /
+                      questions.length) *
+                    100
+                  }%`,
+                }}
+              ></div>
+            </div>
+          </div>
+
+          {/* =========================================
+              QUESTIONS SECTION
+          ========================================= */}
+
+          <div className="questions-grid">
+            {questions.map((q, questionIndex) => (
+              <div key={q.id} className="question-card">
+                <div className="question-header">
+                  <span className="question-number">
+                    {q.id}
+                  </span>
+
+                  <span className="question-count">
+                    Question {questionIndex + 1} of{" "}
+                    {questions.length}
+                  </span>
+                </div>
+
+                <h2 className="question-title">
+                  {q.question}
+                </h2>
+
+                <div className="options-grid">
+                  {q.options.map((option, index) => (
+                    <button
+                      key={option}
+                      onClick={() =>
+                        handleSelect(q.id, option)
+                      }
+                      className={
+                        answers[q.id] === option
+                          ? "option-btn selected"
+                          : "option-btn"
+                      }
+                    >
+                      <span className="option-letter">
+                        {String.fromCharCode(65 + index)}
+                      </span>
+
+                      <span>{option}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
-        </div>
 
-        {/* =========================================
-           QUESTIONS SECTION
-        ========================================= */}
+          {/* =========================================
+              BUTTON SECTION
+          ========================================= */}
 
-        <div className="questions-grid">
-          {questions.map((q) => (
-            <div key={q.id} className="question-card">
-              <h2 className="question-title">
-                {q.id}. {q.question}
-              </h2>
+          <div className="button-row">
+            <button
+              onClick={handleReset}
+              className="reset-btn"
+            >
+              ↻ Play Again
+            </button>
 
-              {/* =========================================
-                 OPTIONS SECTION
-              ========================================= */}
+            <button
+              onClick={handleSubmit}
+              className="submit-btn"
+            >
+              Submit Quiz →
+            </button>
+          </div>
 
-              <div className="options-grid">
-                {q.options.map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleSelect(q.id, option)}
-                    className={
-                      answers[q.id] === option
-                        ? "option-btn selected"
-                        : "option-btn"
-                    }
-                  >
-                    {option}
-                  </button>
-                ))}
+          {/* =========================================
+              SCORE DISPLAY SECTION
+          ========================================= */}
+
+          {score !== null && (
+            <div className="score-box">
+              <div className="score-mascot">
+                <img
+                  src={selectedProfile?.image}
+                  alt={selectedProfile?.name}
+                />
               </div>
+
+              <div className="score-content">
+                <h2>Great Job, {name}!</h2>
+
+                <div className="big-score">
+                  {score}
+                  <span>/{questions.length}</span>
+                </div>
+
+                <p className="score-tagline">
+                  You're a Rounding Star!
+                </p>
+
+                <p className="score-message">
+                  {message}
+                </p>
+              </div>
+
+              <div className="score-trophy">🏆</div>
             </div>
-          ))}
-        </div>
+          )}
+        </section>
 
         {/* =========================================
-           BUTTON SECTION
+            SIDE PANEL
         ========================================= */}
 
-        <div className="button-row">
-          <button onClick={handleSubmit} className="submit-btn">
-            Submit
-          </button>
+        <aside className="side-panel">
+          {/* =========================================
+              PROFILE PREVIEW
+          ========================================= */}
 
-          <button onClick={handleReset} className="reset-btn">
-            Reset
-          </button>
-        </div>
+          <section className="profile-preview">
+            <h2>Your Profile</h2>
 
-        {/* =========================================
-           POPUP RESULT SECTION
-        ========================================= */}
+            <div className="profile-preview-avatar">
+              {selectedProfile ? (
+                <img
+                  src={selectedProfile.image}
+                  alt={selectedProfile.name}
+                />
+              ) : (
+                <div className="profile-placeholder">
+                  🐱
+                </div>
+              )}
+            </div>
 
-        {showPopup && (
-          <div className="popup-overlay">
-            <div className="popup-box">
-              <h2>Your Results</h2>
+            <h3>
+              {selectedProfile?.name || "Choose Avatar"}
+            </h3>
 
-              <p className="popup-score">
-                {score}/{questions.length}
-              </p>
+            <p>
+              {selectedProfile?.role ||
+                "Start your math adventure!"}
+            </p>
+          </section>
 
-              <p className="popup-message">{message}</p>
+          {/* =========================================
+              LEADERBOARD SECTION
+          ========================================= */}
+
+          <section className="leaderboard-section">
+            <h2 className="leaderboard-title">
+              🏆 Leaderboard
+            </h2>
+
+            <div className="leaderboard-list">
+              {leaderboard.length === 0 ? (
+                <p className="empty-leaderboard">
+                  No scores yet. Be the first to submit!
+                </p>
+              ) : (
+                leaderboard.map((player, index) => {
+                  const playerProfile = profiles.find(
+                    (p) => p.role === player.profile
+                  );
+
+                  return (
+                    <div
+                      key={player.id}
+                      className={
+                        index === 0
+                          ? "leaderboard-card gold"
+                          : index === 1
+                          ? "leaderboard-card silver"
+                          : index === 2
+                          ? "leaderboard-card bronze"
+                          : "leaderboard-card"
+                      }
+                    >
+                      <div className="leaderboard-player">
+                        <span className="rank-badge">
+                          {index === 0 && "🥇"}
+                          {index === 1 && "🥈"}
+                          {index === 2 && "🥉"}
+                          {index > 2 && index + 1}
+                        </span>
+
+                        <div className="leaderboard-avatar">
+                          {playerProfile ? (
+                            <img
+                              src={playerProfile.image}
+                              alt={playerProfile.name}
+                            />
+                          ) : (
+                            "🐱"
+                          )}
+                        </div>
+
+                        <div className="leaderboard-info">
+                          <strong>{player.name}</strong>
+                          <small>{player.profile}</small>
+                        </div>
+                      </div>
+
+                      <div className="leaderboard-score-col">
+                        <strong>
+                          {player.score}/{player.total}
+                        </strong>
+
+                        {index === 0 && <span>👑</span>}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </section>
+        </aside>
+      </main>
+
+      {/* =========================================
+          POPUP RESULT SECTION
+      ========================================= */}
+
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <div className="popup-mascot">
+              <img
+                src={selectedProfile?.image}
+                alt={selectedProfile?.name}
+              />
+            </div>
+
+            <h2>🎉 Amazing Work! 🎉</h2>
+
+            <p className="popup-name">
+              {name} the {selectedProfile?.name}
+            </p>
+
+            <p className="popup-score">
+              {score}/{questions.length}
+            </p>
+
+            <p className="popup-message">
+              {message}
+            </p>
+
+            <div className="popup-buttons">
+              <button
+                className="popup-reset-btn"
+                onClick={handleReset}
+              >
+                Play Again
+              </button>
 
               <button
                 className="close-popup-btn"
                 onClick={() => setShowPopup(false)}
               >
-                Close
+                Back to Quiz
               </button>
             </div>
           </div>
-        )}
-
-        {/* =========================================
-           SCORE DISPLAY SECTION
-        ========================================= */}
-
-        {score !== null && (
-          <div className="score-box">
-            <h2>
-              {selectedProfile?.emoji} {name} the {profile}
-            </h2>
-
-            <h3>
-              Score: {score}/{questions.length}
-            </h3>
-          </div>
-        )}
-      </main>
-
-      {/* =========================================
-         LEADERBOARD SECTION
-      ========================================= */}
-
-      <section className="leaderboard-section">
-        <h2 className="leaderboard-title">Leaderboard</h2>
-
-        <div className="leaderboard-list">
-          {leaderboard.length === 0 ? (
-            <p className="empty-leaderboard">
-              No scores yet. Be the first to submit!
-            </p>
-          ) : (
-            leaderboard.map((player, index) => (
-              <div
-                key={player.id}
-                className={
-                  index === 0
-                    ? "leaderboard-card gold"
-                    : index === 1
-                    ? "leaderboard-card silver"
-                    : index === 2
-                    ? "leaderboard-card bronze"
-                    : "leaderboard-card"
-                }
-              >
-                <div className="leaderboard-player">
-                  <div className="rank-badge">
-                    {index === 0 && "🥇"}
-                    {index === 1 && "🥈"}
-                    {index === 2 && "🥉"}
-                    {index > 2 && `#${index + 1}`}
-                  </div>
-
-                  <div>
-                    {player.profile === "Cat Learner" && "🐱"}
-                    {player.profile === "Rocket Student" && "🚀"}
-                    {player.profile === "Math Hero" && "🦸"}{" "}
-                    {player.name}
-                  </div>
-                </div>
-
-                <div className="leaderboard-score">
-                  {player.score}/{player.total}
-                </div>
-              </div>
-            ))
-          )}
         </div>
-      </section>
+      )}
 
       {/* =========================================
-         FOOTER SECTION
+          FOOTER SECTION
       ========================================= */}
 
-      <footer className="footer">copyright: www.mathinenglish.com</footer>
+      <footer className="footer">
+        copyright: www.mathinenglish.com
+      </footer>
     </div>
   );
 }
-
-/* =========================================
-   EXPORT APP
-========================================= */
 
 export default App;
