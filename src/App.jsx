@@ -41,14 +41,17 @@ function App() {
 
   const profiles = [
     {
+      name: "Mathie",
       role: "Cat Learner",
       image: mathieImage,
     },
     {
+      name: "Mingo",
       role: "Rocket Student",
       image: mingoImage,
     },
     {
+      name: "Puffin",
       role: "Math Hero",
       image: puffinImage,
     },
@@ -292,8 +295,9 @@ function App() {
                     )}
                   </div>
 
-                  <strong>{item.name}</strong>
-                  <span>{item.role}</span>
+                  <p className="profile-role">
+                    {item.role}
+                  </p>
                 </button>
               ))}
             </div>
