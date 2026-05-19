@@ -34,6 +34,10 @@ function App() {
   const [showPopup, setShowPopup] = useState(false);
   const [profile, setProfile] = useState("");
   const [leaderboard, setLeaderboard] = useState([]);
+  const [timeSeconds, setTimeSeconds] = useState(0);
+  const [isStarted, setIsStarted] = useState(false);
+  const [xp, setXp] = useState(0);
+  const [badge, setBadge] = useState("");
 
   /* =========================================
      PROFILE DATA
@@ -62,6 +66,11 @@ function App() {
   ========================================= */
 
   const handleSelect = (id, option) => {
+
+    if (!isStarted) {
+      setIsStarted(true);
+    }
+    /*START TIMER WHEN ANSWERING*/
     setAnswers({
       ...answers,
       [id]: option,
@@ -77,6 +86,7 @@ function App() {
       .from("worksheet_results")
       .select("*")
       .order("score", { ascending: false })
+      .order("time_seconds", { ascending: true })
       .order("created_at", { ascending: true })
       .limit(10);
 
@@ -95,6 +105,21 @@ function App() {
   useEffect(() => {
     fetchLeaderboard();
   }, []);
+
+  /* =========================================
+     TIMER SYSTEM
+  ========================================= */
+  useEffect(() => {
+  let timer;
+
+  if (isStarted && score === null) {
+    timer = setInterval(() => {
+      setTimeSeconds((prev) => prev + 1);
+    }, 1000);
+  }
+
+  return () => clearInterval(timer);
+}, [isStarted, score]);
 
   /* =========================================
      HANDLE FORM SUBMISSION
@@ -124,6 +149,25 @@ function App() {
     const percentage = (total / questions.length) * 100;
     const percentageRounded = Math.round(percentage);
 
+    const calculatedXP = total * 100 + Math.max(0, 300 - timeSeconds);
+
+    let earnedBadge = "";
+
+    if (percentage === 100 && timeSeconds <= 60) {
+      earnedBadge = "⚡ Speed Genius";
+    } else if (percentage === 100) {
+      earnedBadge = "🏆 Perfect Master";
+    } else if (percentage >= 80) {
+      earnedBadge = "🌟 Rounding Star";
+    } else if (percentage >= 50) {
+      earnedBadge = "💪 Practice Hero";
+    } else {
+      earnedBadge = "🌱 Brave Learner";
+    }
+
+    setXp(calculatedXP);
+    setBadge(earnedBadge);
+
     if (percentage === 100) {
       setMessage("Perfect score! You are a rounding superstar! 🌟");
     } else if (percentage >= 80) {
@@ -145,7 +189,7 @@ function App() {
   }
 
     const selectedProfile = profiles.find((p) => p.name === profile);
-
+    /*Save into Supabase Backend */
     const { error } = await supabase.from("worksheet_results").insert([
       {
         name: name.trim(),
@@ -153,6 +197,9 @@ function App() {
         score: total,
         total: questions.length,
         percentage: percentageRounded,
+        time_seconds: timeSeconds,
+        xp: calculatedXP,
+        badge: earnedBadge,
       },
     ]);
 
@@ -174,6 +221,11 @@ function App() {
     setScore(null);
     setMessage("");
     setShowPopup(false);
+
+    setTimeSeconds(0);
+    setIsStarted(false);
+    setXp(0);
+    setBadge("");
   };
 
   /* =========================================
@@ -314,7 +366,7 @@ function App() {
                 {questions.length}
               </span>
 
-              <span className="timer-badge">⏱ Practice Mode</span>
+              <span className="timer-badge">⏱ {timeSeconds}s</span>
             </div>
 
             <div className="progress-track">
@@ -426,6 +478,19 @@ function App() {
                 <p className="score-message">
                   {message}
                 </p>
+
+                <p className="score-message">
+                  XP Earned: {xp}
+                </p>
+
+                <p className="score-message">
+                  Badge: {badge}
+                </p>
+
+                <p className="score-message">
+                  Time: {timeSeconds}s
+                </p>
+
               </div>
 
               <div className="score-trophy">🏆</div>
