@@ -1,16 +1,130 @@
-# React + Vite
+# 🎯 Round Up! — Gamified Rounding Worksheet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Round Up! is an interactive educational worksheet web application designed to make learning mathematics more engaging and enjoyable for students.
 
-Currently, two official plugins are available:
+Instead of using traditional static worksheets, this project introduces gamification features such as leaderboards, timers, XP systems, badges, animations, and motivational feedback.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🌐 Live Demo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+🔗 https://rounding-worksheet-app.vercel.app/
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## ✨ Features
+
+- Gamified worksheet experience
+- Responsive design for desktop and mobile
+- User name and avatar selection
+- Interactive multiple-choice worksheet
+- Real-time leaderboard system
+- Timer-based ranking system
+- XP and badge reward system
+- Confetti celebration effects
+- Cloud database integration using Supabase
+- Reset / clear answers functionality
+- Dynamic score calculation
+- Motivational feedback messages
+
+---
+
+## 🛠 Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| React + Vite | Frontend development |
+| Supabase | Backend database |
+| Vercel | Deployment & hosting |
+| CSS3 | Styling & animations |
+| Canvas Confetti | Celebration effects |
+
+---
+
+## 📚 Worksheet Source
+
+Worksheet content inspired from:
+
+https://www.mathinenglish.com/
+
+Copyright belongs to the original owner.
+
+---
+
+## 🚀 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/akinaaisyah/rounding-worksheet-app.git
+```
+
+Go into project folder:
+
+```bash
+cd rounding-worksheet-app
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run locally:
+
+```bash
+npm run dev
+```
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file:
+
+```env
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+---
+
+## 🧩 Database Setup
+
+Run this SQL in Supabase:
+
+```sql
+create table worksheet_results (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  profile text not null,
+  score int not null,
+  total int not null,
+  percentage int not null,
+  time_seconds int,
+  xp int,
+  badge text,
+  created_at timestamp default now()
+);
+```
+
+---
+
+## 📸 Screenshots
+
+(Add your screenshots here)
+
+---
+
+## 👩‍💻 Developed By
+
+Akina Aishah Yeap  
+Software Engineering Student — UTM MJIIT
+
+---
+
+## 📌 Project Objective
+
+The goal of this project is to transform traditional educational worksheets into a more interactive and engaging learning experience through modern web technologies and gamification concepts.
+
