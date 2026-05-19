@@ -671,7 +671,16 @@ body {
 }
 
 .popup-mascot img {
-  width: 110px;
+  width: 130px;
+  object-fit: contain;
+}
+
+/* CENTER POPUP MASCOT */
+.popup-mascot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
 }
 
 .popup-score {
